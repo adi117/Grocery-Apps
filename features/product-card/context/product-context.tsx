@@ -6,12 +6,15 @@ import { config } from "@/constants/url";
 
 interface ProductContextType {
     products: Product[];
+    selectedProduct: Product | null;
+    setSelectedProduct: (product: Product | null) => void;
 }
 
 const ProductContext = createContext<ProductContextType | undefined>(undefined);
 
 export const ProductProvider = ({ children }: { children: ReactNode }) => {
     const [products, setProducts] = useState<Product[]>([]);
+    const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
     useEffect(() => {
         fetch(`${config.BASE_URL}${config.endpoints.products}`)
@@ -20,7 +23,7 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
     }, [])
 
     return (
-        <ProductContext.Provider value={{ products }}>
+        <ProductContext.Provider value={{ products, selectedProduct, setSelectedProduct }}>
             {children}
         </ProductContext.Provider>
     );

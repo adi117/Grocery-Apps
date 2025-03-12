@@ -1,9 +1,9 @@
-import ProductCard from "@/features/product-card/components";
+import Product from "@/features/product-card";
 
 export default async function Home() {
   return (
     <main>
-      <ProductCard/>
+      <Product/>
     </main>
   );
 }
