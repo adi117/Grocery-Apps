@@ -34,9 +34,10 @@ const ProductDetails = () => {
       <div key={selectedProduct?.id} className="bg-white flex flex-col">
         <Image
           src={selectedProduct?.imageUrl || "https://placehold.co/371x336"}
-          width={371}
-          height={336}
+          width={380}
+          height={0}
           alt="product image"
+          className="w-full max-h-72 object-contain"
         />
         <p className="text-3xl font-bold">{selectedProduct?.name}</p>
         <div className="flex flex-col gap-4 mt-7">

@@ -6,7 +6,13 @@ import plusButtonIcon from "@/public/icons/add product.svg"
 
 const ProductCard = () => {
 
-  const { products, setSelectedProduct } = useProducts();
+  const { products, setSelectedProduct, selectedCategory, setSelectedCategory } = useProducts();
+
+  const filteredProducts = (
+    selectedCategory === "All"
+    ? products
+    : products.filter((product) => product.category === selectedCategory)
+  )
 
   const calculatePrice = (price: number) => {
     const totalPrice =price * 1000;
@@ -15,18 +21,18 @@ const ProductCard = () => {
 
   return (
     <div className="grid grid-cols-2 min-h-screen items-center justify-between flex-wrap w-full gap-2 px-4">
-      {products.map((product) => (
+      {filteredProducts.map((product) => (
         <div
         key={product.id}
-        className="bg-[#F9F8F6] items-center justify-end flex flex-col w-full h-full px-3 pb-4 rounded-xl"
+        className="bg-[#F9F8F6] items-center justify-end flex flex-col w-full h-full px-3 pb-4 rounded-xl pt-3"
         onClick={() => setSelectedProduct(product)}
         >
           <Image
             src={product.imageUrl}
-            width={145}
+            width={150}
             height={0}
             alt="product-image"
-            className="h-28"
+            className="max-h-28 w-full object-contain"
           />
           <div className="flex flex-col text-black w-full h-full">
             <div>
@@ -42,7 +48,6 @@ const ProductCard = () => {
                   height={24}
                   alt="add product to cart button"
                 />
-
               </div>
             </div>
           </div>

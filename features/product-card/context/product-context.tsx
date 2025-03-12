@@ -8,6 +8,8 @@ interface ProductContextType {
     products: Product[];
     selectedProduct: Product | null;
     setSelectedProduct: (product: Product | null) => void;
+    selectedCategory: string;
+    setSelectedCategory: (category: string) => void;
 }
 
 const ProductContext = createContext<ProductContextType | undefined>(undefined);
@@ -15,6 +17,7 @@ const ProductContext = createContext<ProductContextType | undefined>(undefined);
 export const ProductProvider = ({ children }: { children: ReactNode }) => {
     const [products, setProducts] = useState<Product[]>([]);
     const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+    const [selectedCategory, setSelectedCategory] = useState<string>("All");
 
     useEffect(() => {
         fetch(`${config.BASE_URL}${config.endpoints.products}`)
@@ -23,7 +26,7 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
     }, [])
 
     return (
-        <ProductContext.Provider value={{ products, selectedProduct, setSelectedProduct }}>
+        <ProductContext.Provider value={{ products, selectedProduct, setSelectedProduct, selectedCategory, setSelectedCategory }}>
             {children}
         </ProductContext.Provider>
     );
