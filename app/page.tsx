@@ -1,11 +1,10 @@
 import Product from "@/features/product-card";
-import Filter from "@/features/headers/components/filter";
-
+import Header from "@/features/headers";
 
 export default async function Home() {
   return (
     <main>
-      <Filter/>
+      <Header/>
       <Product/>
     </main>
   );

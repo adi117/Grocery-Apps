@@ -1,7 +1,6 @@
-import { useProducts } from "@/features/product-card/context/product-context";
-import FilterButton from "./filter-button";
+import FilterButton from "./category-button";
 
-const Filter = () => {
+const CategoryFilter = () => {
 
     const categories = ["All", "Spicy", "Dressings", "Sweet", "Roots", "Exotic", "Fresh Veggie"];
 
@@ -14,4 +13,4 @@ const Filter = () => {
     );
 }
 
-export default Filter;
+export default CategoryFilter;

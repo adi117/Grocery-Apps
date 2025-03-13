@@ -17,15 +17,19 @@ const ProductDetails = () => {
   const router = useRouter();
 
   const calculatePrice = (counter: number, price: number) => {
-    const totalPrice =price * counter * 1000;
+    const totalPrice = price * counter * 1000;
     return Number(totalPrice.toFixed(2));
+  }
+
+  const handleQuantityChange = (counter: number, change: number) => {
+    const newQuantity = counter + change;
+    setCounter(Number(newQuantity.toFixed(1)));
   }
 
   if (!selectedProduct) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="text-gray-500 text-lg">No product selected.</p>
-      </div>
+      <>
+      </>
     );
   }
 
@@ -41,7 +45,7 @@ const ProductDetails = () => {
         />
         <p className="text-3xl font-bold">{selectedProduct?.name}</p>
         <div className="flex flex-col gap-4 mt-7">
-          <p className="text-lg font-semibold">In {selectedProduct?.metadata.increment} grams</p>
+          <p className="text-lg font-semibold">In 100 grams</p>
           <MetadataComponent metadata={selectedProduct.metadata} />
         </div>
         <div className="flex flex-col gap-4 pt-6">
@@ -49,7 +53,7 @@ const ProductDetails = () => {
             <div className="flex py-1 px-2 items-center bg-[#F9F8F6] rounded-full justify-between w-full">
               <button
                 className="p-3"
-                onClick={() => setCounter(counter - 1)}
+                onClick={() => handleQuantityChange(counter, (selectedProduct.metadata.increment / 1000 * -1))}
               >
                 <Image
                   src={minusIcon}
@@ -62,7 +66,7 @@ const ProductDetails = () => {
               <p className="p-0 text-lg">{counter} kg</p>
               <button
                 className="p-3"
-                onClick={() => setCounter(counter + 1)}
+                onClick={() => handleQuantityChange(counter, selectedProduct.metadata.increment / 1000)}
               >
                 <Image
                   src={plusIcon}

@@ -3,20 +3,41 @@
 import Image from "next/image";
 import { useProducts } from "../context/product-context";
 import plusButtonIcon from "@/public/icons/add product.svg"
+import { useEffect, useState } from "react";
 
 const ProductCard = () => {
 
-  const { products, setSelectedProduct, selectedCategory, setSelectedCategory } = useProducts();
+  const { products, setSelectedProduct, selectedCategory, searchQuery, filteredProducts, setFilteredProducts } = useProducts();
 
-  const filteredProducts = (
-    selectedCategory === "All"
-    ? products
-    : products.filter((product) => product.category === selectedCategory)
-  )
+  useEffect (() => {
+    const filteredProducts = (
+      selectedCategory === "All"
+      ? products
+      : products.filter((product) => product.category === selectedCategory)
+    )
+  
+    const searchedProducts = (
+      searchQuery === ""
+      ? filteredProducts
+      : filteredProducts.filter((product) => product.name.toLowerCase().includes(searchQuery.toLowerCase()))
+    )
+
+    setFilteredProducts(searchedProducts);
+  }, [searchQuery, selectedCategory, products, setFilteredProducts])
+
+  
 
   const calculatePrice = (price: number) => {
     const totalPrice =price * 1000;
     return Number(totalPrice.toFixed(2));
+  }
+
+  if (filteredProducts.length < 1){
+    return (
+      <div className="flex justify-center items-center">
+        No product matched!
+      </div>
+    )
   }
 
   return (
