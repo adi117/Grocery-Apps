@@ -25,11 +25,11 @@ export default function Header() {
 
       <Drawer isOpen={isDrawerOpen} onClose={() => setDrawerOpen(false)}>
         {isDrawerOpen
-          ?
+          &&
           <div className="flex flex-col h-screen px-6 gap-3 items-end">
             <button
-            className="text-xl font-bold py-5"
-            onClick={() => setDrawerOpen(false)}
+              className="text-xl font-bold py-5"
+              onClick={() => setDrawerOpen(false)}
             >
               x
             </button>
@@ -37,13 +37,12 @@ export default function Header() {
             <SortForm />
 
             <button
-            className="flex justify-center bg-black text-white text-xl font-medium px-6 py-3 rounded-full w-full "
-          >
-            Apply
-          </button>
+              className="flex justify-center bg-black text-white text-xl font-medium px-6 py-3 rounded-full w-full"
+            >
+              Apply
+            </button>
           </div>
-
-          : <></>}
+        }
       </Drawer>
     </main>
   )

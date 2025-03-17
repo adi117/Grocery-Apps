@@ -3,15 +3,18 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useProducts } from "@/features/product-card/context/product-context";
+import { useCart } from "@/features/cart/context/cart-context";
 import MetadataComponent from "./metadata-component";
 import { useState } from "react";
 import plusIcon from "@/public/icons/plus icon.svg"
 import minusIcon from "@/public/icons/minus icon.svg"
 import favoriteIcon from "@/public/icons/favorite.svg"
+import { Product } from "@/types/product";
 
 const ProductDetails = () => {
 
   const { selectedProduct, setSelectedProduct } = useProducts();
+  const { addItem, updateItemQuantity, removeItem, items } = useCart();
   const [counter, setCounter] = useState(1);
 
   const router = useRouter();
@@ -24,6 +27,18 @@ const ProductDetails = () => {
   const handleQuantityChange = (counter: number, change: number) => {
     const newQuantity = counter + change;
     setCounter(Number(newQuantity.toFixed(1)));
+  }
+
+  const handleAddCart = () => {
+    if (selectedProduct) {
+      const currentItem = items.find((item) => item.id == selectedProduct.id);
+
+      if (currentItem) {
+        updateItemQuantity(selectedProduct.id, counter);
+      } else {
+        addItem(selectedProduct, counter);
+      }
+    }
   }
 
   if (!selectedProduct) {
@@ -88,7 +103,7 @@ const ProductDetails = () => {
             </button>
           </div>
           <button
-            onClick={() => setSelectedProduct(null)}
+            onClick={() => handleAddCart()}
             className="flex justify-between bg-black text-white text-xl font-medium px-6 py-3 rounded-full w-full"
           >
             <p>To cart</p>

@@ -20,16 +20,28 @@ const ProductContext = createContext<ProductContextType | undefined>(undefined);
 
 export const ProductProvider = ({ children }: { children: ReactNode }) => {
     const [products, setProducts] = useState<Product[]>([]);
+    const [loading, setLoading] = useState<boolean>(true);
+    const [error, setError] = useState<unknown>(null);
     const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
     const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
     const [selectedCategory, setSelectedCategory] = useState<string>("All");
     const [searchQuery, setQuery] = useState<string>("");
 
-
     useEffect(() => {
-        fetch(`${config.BASE_URL}${config.endpoints.products}`)
-            .then((res) => res.json())
-            .then((data) => setProducts(data))
+        const fetchData = async () => {
+            try {
+                const res = await fetch(`${config.BASE_URL}${config.endpoints.products}`);
+                if (!res.ok) {
+                    throw new Error("Failed to retrieve data!");
+                }
+                const data = await res.json();
+                setLoading(false);
+                setProducts(data);
+            } catch (error) {
+                setError(error);
+            }
+        }
+        fetchData();
     }, []);
 
     return (

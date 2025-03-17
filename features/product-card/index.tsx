@@ -5,6 +5,7 @@ import ProductDetails from "./components/product-details";
 import { useProducts } from "./context/product-context";
 import Drawer from "../drawer/component/drawer";
 import { useEffect, useState } from "react";
+import { cn } from "@/utils/cn";
 
 export default function Product() {
     const { selectedProduct } = useProducts();
@@ -17,16 +18,19 @@ export default function Product() {
     }, [selectedProduct]);
 
     return (
-        <main className="">
-            {selectedProduct
-                ? <div
-                onClick={() => setDrawerOpen(true)}
-            >
-                <Drawer isOpen={isDrawerOpen} onClose={() => setDrawerOpen(false)}>
-                    <ProductDetails />
-                </Drawer>
+        <main className="relative min-h-screen">
+            <div
+            className={cn("absolute w-full", isDrawerOpen && "overflow-hidden")}>
+                <ProductCard />
             </div>
-                : <ProductCard/>
+            {selectedProduct
+                && <div
+                    onClick={() => setDrawerOpen(true)}
+                >
+                    <Drawer isOpen={isDrawerOpen} onClose={() => setDrawerOpen(false)}>
+                        <ProductDetails />
+                    </Drawer>
+                </div>
             }
         </main>
     )

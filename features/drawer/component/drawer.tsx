@@ -18,7 +18,7 @@ const Drawer: FC<DrawerProps> = ({ children, isOpen, onClose }) => {
             >
             </div>
             <div
-                className={cn("absolute left-0 bg-white w-full rounded-t-2xl transition-transform duration-[2000ms]", isOpen ? "translate-y-90 z-10" : "translate-y-full z-10"
+                className={cn("absolute left-0 bg-white w-full rounded-t-2xl transition-transform duration-1000", isOpen ? "translate-y-90 z-10" : "translate-y-full z-10"
                 )}
             >
                 {children}
